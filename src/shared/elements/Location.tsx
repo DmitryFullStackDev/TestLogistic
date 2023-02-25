@@ -10,9 +10,16 @@ type Props = {
   place: any
   getPlaceSearch: any
   setDisplay: any
+  setPlaceSearch: any
 }
 
-const Location: FC<Props> = ({ width, place, getPlaceSearch, setDisplay }) => {
+const Location: FC<Props> = ({
+  width,
+  place,
+  getPlaceSearch,
+  setDisplay,
+  setPlaceSearch,
+}) => {
   const { isPredictionsLoaded, placeSearch, errorPlaceSearch, display } = place
 
   const [isOpen, setIsOpen] = useState(false)
@@ -55,6 +62,8 @@ const Location: FC<Props> = ({ width, place, getPlaceSearch, setDisplay }) => {
   const handleCrossClick = () => {
     setDisplay('')
     setIsOpen(false)
+    setPlaceSearch([])
+    inputRef.current.focus()
   }
 
   return (
