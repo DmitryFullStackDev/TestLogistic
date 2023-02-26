@@ -22,12 +22,12 @@ export const Path = () => {
     ),
   )
 
-  useEffect(() => {
-    const n = Object.entries(next)
-      .filter(item => item[0].includes('input'))
-      .map(item => [item[0].replace('input', ''), item[1]])
+  const allQueryEntries = Object.entries(next)
+    .filter(item => item[0].includes('input'))
+    .map(item => [item[0].replace('input', ''), item[1]])
 
-    n.forEach(item => a.addEntity({ id: item[0], display: item[1] }))
+  useEffect(() => {
+    allQueryEntries.forEach(item => a.addEntity(item[0]))
   }, [])
 
   return (
@@ -38,15 +38,13 @@ export const Path = () => {
 
       <Button
         onClick={() =>
-          a.addEntity({
-            display: '',
-            id:
-              Math.random() +
+          a.addEntity(
+            Math.random() +
               Math.random() +
               Math.random() +
               Math.random() +
               place.length,
-          })
+          )
         }
       >
         add destination

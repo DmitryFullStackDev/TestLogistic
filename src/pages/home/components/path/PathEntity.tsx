@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Box,
   Button,
@@ -29,7 +29,6 @@ export const PathEntity = ({ item, i, arr }) => {
   )
 
   const setDisplayUpdated = value => {
-    a.setDisplay(value)
     setSearch(value.data)
   }
 
@@ -37,6 +36,10 @@ export const PathEntity = ({ item, i, arr }) => {
     deleteParam()
     a.deleteEntity(item.id)
   }
+
+  useEffect(() => {
+    setSearch(search)
+  }, [])
 
   return (
     <Box>

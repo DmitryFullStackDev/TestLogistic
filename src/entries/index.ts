@@ -7,4 +7,4 @@ export {
   setDisplay,
   setPlaceSearch,
 } from './location/slices'
-export { setCountError, setCount } from './counter/slices'
+export { setCountError } from './counter/slices'

@@ -4,10 +4,6 @@ export const getPlaceSearch = createAction<{ data: string; id: string }>(
   'getPlaceSearch',
 )
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-const params = new URL(document.location).searchParams
-
 export const place = createSlice({
   name: 'place',
   initialState: [
@@ -20,7 +16,6 @@ export const place = createSlice({
     },
     {
       id: 'destination',
-      display: '',
       placeSearch: [],
       isLoading: false,
       isPredictionsLoaded: false,
@@ -77,17 +72,12 @@ export const place = createSlice({
         return item
       })
     },
-    addEntity: (
-      state,
-      { payload }: PayloadAction<{ id: string; display: string }>,
-    ) => {
-      const { id, display } = payload
-      const isEntity = state.find(item => item.id === id)
+    addEntity: (state, { payload }: PayloadAction<string>) => {
+      const isEntity = state.find(item => item.id === payload)
 
       if (!isEntity) {
         state.push({
-          id,
-          display,
+          id: payload,
           placeSearch: [],
           isPredictionsLoaded: false,
           errorPlaceSearch: false,

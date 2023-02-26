@@ -1,7 +1,6 @@
 import React from 'react'
 import { Box, Button, Text, useSearchParamsState } from '../../../../shared'
 import {
-  setCount,
   setCountError,
   useActions,
   useTypedSelector,
@@ -11,12 +10,11 @@ export const Counter = () => {
   const isError = useTypedSelector(state => state.counter.isError)
   const [search, setSearch] = useSearchParamsState('counter', '0')
 
-  const a = useActions({ setCount, setCountError })
+  const a = useActions({ setCountError })
 
   const handlePlus = () => {
     const result = String(Number(search) + 1)
     setSearch(result)
-    a.setCount(result)
     a.setCountError(false)
   }
 
@@ -24,7 +22,6 @@ export const Counter = () => {
     if (Number(search) > 0) {
       const result = String(Number(search) - 1)
       setSearch(result)
-      a.setCount(result)
       a.setCountError(false)
     }
   }
