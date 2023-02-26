@@ -1,7 +1,6 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects'
 import * as actions from './slices'
 import * as actionsLocation from '../location/slices'
-
 import { API } from '../../shared'
 
 function* getDistance(action: ReturnType<typeof actions.getDistance>) {

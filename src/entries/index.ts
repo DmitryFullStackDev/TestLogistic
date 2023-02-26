@@ -6,5 +6,7 @@ export {
   getPlaceSearch,
   setDisplay,
   setPlaceSearch,
+  setErrorPlaceSearch,
 } from './location/slices'
 export { setCountError } from './counter/slices'
+export { getDistance } from './distance/slices'

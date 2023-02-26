@@ -4,14 +4,14 @@ import './components/datePiker/style.css'
 import { Counter, DatePiker, Path } from './components'
 import { Button } from '../../shared'
 import {
+  getDistance,
   getPlaceSearch,
   setCountError,
+  setErrorPlaceSearch,
   useActions,
   useTypedSelector,
 } from '../../entries'
 import { useSearchParams } from 'react-router-dom'
-import { setErrorPlaceSearch } from '../../entries/location/slices'
-import { getDistance } from '../../entries/distance/slices'
 
 export const Home = () => {
   const a = useActions({
@@ -64,7 +64,7 @@ export const Home = () => {
   }
 
   const f = useTypedSelector(state => state.distance.date)
-  console.log(f)
+
   return (
     <>
       <Path />
