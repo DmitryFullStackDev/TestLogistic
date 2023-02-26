@@ -11,30 +11,16 @@ import {
   useActions,
   useTypedSelector,
 } from '../../entries'
-import { useSearchParams } from 'react-router-dom'
+import { useAllInput } from './hooks/useAllInput'
 
 export const Home = () => {
+  const [allQueryEntries, searchParams] = useAllInput()
   const a = useActions({
     setCountError,
     getPlaceSearch,
     setErrorPlaceSearch,
     getDistance,
   })
-
-  const [searchParams] = useSearchParams()
-
-  const next = Object.assign(
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    [...searchParams.entries()].reduce(
-      (o, [key, value]) => ({ ...o, [key]: value }),
-      {},
-    ),
-  )
-
-  const allQueryEntries = Object.entries(next)
-    .filter(item => item[0].includes('input'))
-    .map(item => [item[0].replace('input', ''), item[1]])
 
   const allQueryEntriesReversed = allQueryEntries.map(item => item.reverse())
 

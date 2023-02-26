@@ -1,8 +1,7 @@
 import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { GetPlaceSearchType, PlacePayloadType } from '../../shared'
 
-export const getPlaceSearch = createAction<{ data: string; id: string }>(
-  'getPlaceSearch',
-)
+export const getPlaceSearch = createAction<GetPlaceSearchType>('getPlaceSearch')
 
 export const place = createSlice({
   name: 'place',
@@ -23,16 +22,6 @@ export const place = createSlice({
     },
   ],
   reducers: {
-    setDisplay: (state, { payload }) => {
-      const { id, data } = payload
-
-      return state.map(item => {
-        if (item.id === id) {
-          return { ...item, display: data }
-        }
-        return item
-      })
-    },
     setIsLoading: (state, { payload }) => {
       const { id, data } = payload
       return state.map(item => {
@@ -42,7 +31,10 @@ export const place = createSlice({
         return item
       })
     },
-    setPlaceSearch: (state, { payload }: PayloadAction<any>) => {
+    setPlaceSearch: (
+      state,
+      { payload }: PayloadAction<PlacePayloadType<string[]>>,
+    ) => {
       const { id, data } = payload
 
       return state.map(item => {
@@ -52,7 +44,10 @@ export const place = createSlice({
         return item
       })
     },
-    setIsPredictionsLoaded: (state, { payload }: PayloadAction<any>) => {
+    setIsPredictionsLoaded: (
+      state,
+      { payload }: PayloadAction<PlacePayloadType<boolean>>,
+    ) => {
       const { id, data } = payload
 
       return state.map(item => {
@@ -62,7 +57,10 @@ export const place = createSlice({
         return item
       })
     },
-    setErrorPlaceSearch: (state, { payload }: PayloadAction<any>) => {
+    setErrorPlaceSearch: (
+      state,
+      { payload }: PayloadAction<PlacePayloadType<boolean>>,
+    ) => {
       const { id, data } = payload
 
       return state.map(item => {
@@ -91,7 +89,6 @@ export const place = createSlice({
 })
 
 export const {
-  setDisplay,
   setPlaceSearch,
   setErrorPlaceSearch,
   setIsPredictionsLoaded,

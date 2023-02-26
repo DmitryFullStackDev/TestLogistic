@@ -1,28 +1,16 @@
 import React, { useEffect } from 'react'
 import { Box, Button } from '../../../../shared'
 import { addEntity, useActions, useTypedSelector } from '../../../../entries'
-import { useSearchParams } from 'react-router-dom'
 import { PathEntity } from './PathEntity'
+import { useAllInput } from '../../hooks/useAllInput'
 
 export const Path = () => {
   const place = useTypedSelector(state => state.place)
+  const [allQueryEntries] = useAllInput()
 
   const a = useActions({
     addEntity,
   })
-
-  const [searchParams] = useSearchParams()
-  const next = Object.assign(
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    [...searchParams.entries()].reduce(
-      (o, [key, value]) => ({ ...o, [key]: value }),
-      {},
-    ),
-  )
-  const allQueryEntries = Object.entries(next)
-    .filter(item => item[0].includes('input'))
-    .map(item => [item[0].replace('input', ''), item[1]])
 
   useEffect(() => {
     allQueryEntries.forEach(item => a.addEntity(item[0]))

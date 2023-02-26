@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { FC, useEffect } from 'react'
 import {
   Box,
   Button,
@@ -10,15 +10,27 @@ import {
   addEntity,
   deleteEntity,
   getPlaceSearch,
-  setDisplay,
   setPlaceSearch,
   useActions,
 } from '../../../../entries'
 
-export const PathEntity = ({ item, i, arr }) => {
+type ItemType = {
+  id: string
+  placeSearch: any[]
+  isLoading: boolean
+  isPredictionsLoaded: boolean
+  errorPlaceSearch: boolean
+}
+
+type Props = {
+  item: ItemType
+  i: number
+  arr: ItemType[]
+}
+
+export const PathEntity: FC<Props> = ({ item, i, arr }) => {
   const a = useActions({
     getPlaceSearch,
-    setDisplay,
     setPlaceSearch,
     addEntity,
     deleteEntity,
@@ -27,10 +39,6 @@ export const PathEntity = ({ item, i, arr }) => {
     'input' + item.id,
     '',
   )
-
-  const setDisplayUpdated = value => {
-    setSearch(value.data)
-  }
 
   const handleDeleteClick = () => {
     deleteParam()
@@ -47,7 +55,7 @@ export const PathEntity = ({ item, i, arr }) => {
         setPlaceSearch={a.setPlaceSearch}
         getPlaceSearch={a.getPlaceSearch}
         place={{ ...item, display: search }}
-        setDisplay={setDisplayUpdated}
+        setDisplay={setSearch}
       />
 
       {i !== 0 && arr.length !== 2 && (

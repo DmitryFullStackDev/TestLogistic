@@ -4,20 +4,35 @@ import {
   Box,
   Button,
   CrossIcon,
+  GetPlaceSearchType,
   Input,
   InputWrapper,
   OptionStyled,
+  PlacePayloadType,
   SpinnerIcon,
   Text,
   useTimeout,
 } from '../'
+import { ActionCreatorWithOptionalPayload } from '@reduxjs/toolkit'
+
+type PlaceType = {
+  id: string
+  placeSearch: any[]
+  isLoading: boolean
+  isPredictionsLoaded: boolean
+  errorPlaceSearch: boolean
+  display: string
+}
 
 type Props = {
   width?: string
-  place: any
-  getPlaceSearch: any
-  setDisplay: any
-  setPlaceSearch: any
+  place: PlaceType
+  getPlaceSearch: ActionCreatorWithOptionalPayload<GetPlaceSearchType, string>
+  setDisplay: (opt: string) => void
+  setPlaceSearch: ActionCreatorWithOptionalPayload<
+    PlacePayloadType<string[]>,
+    'place/setPlaceSearch'
+  >
 }
 
 export const Location: FC<Props> = ({
@@ -51,7 +66,7 @@ export const Location: FC<Props> = ({
   }
 
   const handleDownShiftChange = select => {
-    setDisplay({ data: select[0], id })
+    setDisplay(select[0])
     setIsOpen(false)
     inputRef.current.blur()
   }
@@ -60,7 +75,7 @@ export const Location: FC<Props> = ({
 
   const handleInputChange = e => {
     getPlaceSearchTimer({ data: e.target.value, id })
-    setDisplay({ data: e.target.value, id })
+    setDisplay(e.target.value)
   }
 
   const handelInputFocus = () => setIsOpen(true)
@@ -76,7 +91,7 @@ export const Location: FC<Props> = ({
   }
 
   const handleCrossClick = () => {
-    setDisplay({ data: '', id })
+    setDisplay('')
     setIsOpen(false)
     setPlaceSearch({ data: [], id })
     inputRef.current.focus()

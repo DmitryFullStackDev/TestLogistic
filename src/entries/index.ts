@@ -4,7 +4,6 @@ export {
   addEntity,
   deleteEntity,
   getPlaceSearch,
-  setDisplay,
   setPlaceSearch,
   setErrorPlaceSearch,
 } from './location/slices'

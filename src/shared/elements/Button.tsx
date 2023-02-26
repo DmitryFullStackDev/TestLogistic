@@ -6,7 +6,6 @@ type Props = {
   iconSize?: string
   disabled?: boolean
   position?: string
-  underlineIcon?: any
   alignSelf?: string
   fontWeight?: number
   active?: boolean
