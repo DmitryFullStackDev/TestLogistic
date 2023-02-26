@@ -1,9 +1,16 @@
 import Downshift from 'downshift'
 import React, { FC, useRef, useState } from 'react'
-import { Box, Button, CrossIcon, Text } from './'
-import { InputWrapper } from './InputWrapper'
-import { Input } from './Input'
-import { OptionStyled } from './OptionStyled'
+import {
+  Box,
+  Button,
+  CrossIcon,
+  Input,
+  InputWrapper,
+  OptionStyled,
+  SpinnerIcon,
+  Text,
+  useTimeout,
+} from '../'
 
 type Props = {
   width?: string
@@ -13,14 +20,21 @@ type Props = {
   setPlaceSearch: any
 }
 
-const Location: FC<Props> = ({
+export const Location: FC<Props> = ({
   width,
   place,
   getPlaceSearch,
   setDisplay,
   setPlaceSearch,
 }) => {
-  const { isPredictionsLoaded, placeSearch, errorPlaceSearch, display } = place
+  const {
+    isPredictionsLoaded,
+    placeSearch,
+    errorPlaceSearch,
+    display,
+    id,
+    isLoading,
+  } = place
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -37,14 +51,16 @@ const Location: FC<Props> = ({
   }
 
   const handleDownShiftChange = select => {
-    setDisplay(select[0])
+    setDisplay({ data: select[0], id })
     setIsOpen(false)
     inputRef.current.blur()
   }
 
+  const getPlaceSearchTimer = useTimeout(getPlaceSearch, 800)
+
   const handleInputChange = e => {
-    getPlaceSearch(e.target.value)
-    setDisplay(e.target.value)
+    getPlaceSearchTimer({ data: e.target.value, id })
+    setDisplay({ data: e.target.value, id })
   }
 
   const handelInputFocus = () => setIsOpen(true)
@@ -60,9 +76,9 @@ const Location: FC<Props> = ({
   }
 
   const handleCrossClick = () => {
-    setDisplay('')
+    setDisplay({ data: '', id })
     setIsOpen(false)
-    setPlaceSearch([])
+    setPlaceSearch({ data: [], id })
     inputRef.current.focus()
   }
 
@@ -106,13 +122,14 @@ const Location: FC<Props> = ({
                 position="absolute"
                 right="3px"
                 top="3px"
+                disabled={isLoading}
               >
-                <CrossIcon />
+                {isLoading ? <SpinnerIcon /> : <CrossIcon />}
               </Button>
             </InputWrapper>
 
             {errorPlaceSearch && (
-              <Text color="warning">something went wrong</Text>
+              <Text color="warning">choose proper city</Text>
             )}
           </Box>
 
@@ -120,7 +137,7 @@ const Location: FC<Props> = ({
             <Box
               shadow={isBottom ? 'high' : ''}
               position="absolute"
-              bottom={!isBottom && '43px'}
+              bottom={!isBottom && '38px'}
               top={isBottom && '38px'}
               borderRadius={isBottom ? '0 0 6px 6px' : '6px 6px 0 0'}
               borderTop={isBottom && 'none'}
@@ -154,5 +171,3 @@ const Location: FC<Props> = ({
     </Downshift>
   )
 }
-
-export default Location

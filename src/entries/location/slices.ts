@@ -1,29 +1,102 @@
 import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-export const getPlaceSearch = createAction<string>('getPlaceSearch')
+export const getPlaceSearch = createAction<{ data: string; id: string }>(
+  'getPlaceSearch',
+)
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+const params = new URL(document.location).searchParams
 
 export const place = createSlice({
-  name: 'display',
-  initialState: {
-    id: '',
-    display: '',
-    placeSearch: [],
-    isPredictionsLoaded: false,
-    errorPlaceSearch: false,
-  },
+  name: 'place',
+  initialState: [
+    {
+      id: 'origin',
+      placeSearch: [],
+      isLoading: false,
+      isPredictionsLoaded: false,
+      errorPlaceSearch: false,
+    },
+    {
+      id: 'destination',
+      display: '',
+      placeSearch: [],
+      isLoading: false,
+      isPredictionsLoaded: false,
+      errorPlaceSearch: false,
+    },
+  ],
   reducers: {
     setDisplay: (state, { payload }) => {
-      state.display = payload
+      const { id, data } = payload
+
+      return state.map(item => {
+        if (item.id === id) {
+          return { ...item, display: data }
+        }
+        return item
+      })
+    },
+    setIsLoading: (state, { payload }) => {
+      const { id, data } = payload
+      return state.map(item => {
+        if (item.id === id) {
+          return { ...item, isLoading: data }
+        }
+        return item
+      })
     },
     setPlaceSearch: (state, { payload }: PayloadAction<any>) => {
-      state.placeSearch = payload
+      const { id, data } = payload
+
+      return state.map(item => {
+        if (item.id === id) {
+          return { ...item, placeSearch: data }
+        }
+        return item
+      })
     },
-    setIsPredictionsLoaded: (state, { payload }: PayloadAction<boolean>) => {
-      state.isPredictionsLoaded = payload
+    setIsPredictionsLoaded: (state, { payload }: PayloadAction<any>) => {
+      const { id, data } = payload
+
+      return state.map(item => {
+        if (item.id === id) {
+          return { ...item, isPredictionsLoaded: data }
+        }
+        return item
+      })
     },
-    setErrorPlaceSearch: (state, { payload }: PayloadAction<boolean>) => {
-      state.errorPlaceSearch = payload
+    setErrorPlaceSearch: (state, { payload }: PayloadAction<any>) => {
+      const { id, data } = payload
+
+      return state.map(item => {
+        if (item.id === id) {
+          return { ...item, errorPlaceSearch: data }
+        }
+        return item
+      })
     },
+    addEntity: (
+      state,
+      { payload }: PayloadAction<{ id: string; display: string }>,
+    ) => {
+      const { id, display } = payload
+      const isEntity = state.find(item => item.id === id)
+
+      if (!isEntity) {
+        state.push({
+          id,
+          display,
+          placeSearch: [],
+          isPredictionsLoaded: false,
+          errorPlaceSearch: false,
+          isLoading: false,
+        })
+      }
+    },
+    deleteEntity: (state, { payload }: PayloadAction<string>) =>
+      state.filter(item => item.id !== payload),
   },
 })
 
@@ -32,4 +105,7 @@ export const {
   setPlaceSearch,
   setErrorPlaceSearch,
   setIsPredictionsLoaded,
+  addEntity,
+  setIsLoading,
+  deleteEntity,
 } = place.actions

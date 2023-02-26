@@ -1,27 +1,37 @@
 import React from 'react'
-import { Box } from '../../shared'
-import Location from '../../shared/elements/Location'
-import { useActions, useTypedSelector } from '../../entries'
+import 'react-calendar/dist/Calendar.css'
+import './components/datePiker/style.css'
+import { Counter, DatePiker, Path } from './components'
+import { Button } from '../../shared'
 import {
   getPlaceSearch,
-  setDisplay,
-  setPlaceSearch,
-} from '../../entries/location/slices'
+  setCountError,
+  useActions,
+  useTypedSelector,
+} from '../../entries'
 
 export const Home = () => {
-  const a = useActions({ getPlaceSearch, setDisplay, setPlaceSearch })
+  const counter = useTypedSelector(state => state.counter)
   const place = useTypedSelector(state => state.place)
+
+  const a = useActions({ setCountError, getPlaceSearch })
+
+  const handleNextClick = () => {
+    if (Number(counter.count) === 0) {
+      a.setCountError(true)
+    }
+    place.forEach(item => a.getPlaceSearch({ id: item.id, data: item.display }))
+  }
 
   return (
     <>
-      <Box width="100%" direction="row" align="center" margin="0 0 50px 0">
-        <Location
-          setPlaceSearch={a.setPlaceSearch}
-          getPlaceSearch={a.getPlaceSearch}
-          place={place}
-          setDisplay={a.setDisplay}
-        />
-      </Box>
+      <Path />
+
+      <DatePiker />
+
+      <Counter />
+
+      <Button onClick={handleNextClick}>next</Button>
     </>
   )
 }

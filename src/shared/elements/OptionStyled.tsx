@@ -10,7 +10,7 @@ export const OptionStyled = styled.div<Props>`
     box-sizing: border-box;
 
     width: 100%;
-    padding: 12px 10px;
+    padding: 5px 10px;
     font-family: Inter, sans-serif;
     font-style: normal;
     font-weight: normal;

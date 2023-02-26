@@ -26,6 +26,8 @@ type Props = {
   bottom?: string
   overflow?: string
   shadow?: string
+  gap?: string
+  zIndex?: string
 }
 
 export const Box = styled.div<Props>`
@@ -37,11 +39,13 @@ export const Box = styled.div<Props>`
   width: ${({ width }) => width};
 
   display: ${({ display }) => display || 'flex'};
+  gap: ${({ gap }) => gap};
   flex-direction: ${({ direction }) => direction};
   justify-content: ${({ justify }) => justify};
   align-items: ${({ align }) => align};
   align-self: ${({ alignSelf }) => alignSelf};
   overflow: ${({ overflow }) => overflow};
+  z-index: ${({ zIndex }) => zIndex};
 
   background: ${({ background, theme }) =>
     theme.color[background] || background};

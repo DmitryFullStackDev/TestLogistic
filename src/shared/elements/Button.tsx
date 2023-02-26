@@ -28,6 +28,7 @@ type Props = {
 
 export const Button = styled.button<Props>`
   position: relative;
+  height: 30px;
   font-family: Inter, sans-serif;
   width: ${({ width }) => width};
   margin: ${({ margin }) => margin};
