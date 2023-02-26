@@ -12,8 +12,17 @@ export const Path = () => {
     addEntity,
   })
 
+  const handleAddClick = () =>
+    a.addEntity(
+      Math.random() +
+        Math.random() +
+        Math.random() +
+        Math.random() +
+        place.length,
+    )
+
   useEffect(() => {
-    allQueryEntries.forEach(item => a.addEntity(item[0]))
+    allQueryEntries.forEach(item => a.addEntity(Number(item[0])))
   }, [])
 
   return (
@@ -22,18 +31,8 @@ export const Path = () => {
         <PathEntity key={item.id} item={item} i={i} arr={arr} />
       ))}
 
-      <Button
-        onClick={() =>
-          a.addEntity(
-            Math.random() +
-              Math.random() +
-              Math.random() +
-              Math.random() +
-              place.length,
-          )
-        }
-      >
-        add destination
+      <Button margin="5px 0 0 0" onClick={handleAddClick}>
+        Add destination
       </Button>
     </Box>
   )

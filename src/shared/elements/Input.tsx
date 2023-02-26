@@ -10,7 +10,7 @@ export const Input: any = styled.input`
   outline: none;
   border: none;
   font-style: normal;
-  font-weight: 600;
+  font-weight: normal;
   font-size: 16px;
   line-height: 24px;
   padding: 0;

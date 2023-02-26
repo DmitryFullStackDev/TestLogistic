@@ -1,2 +1,2 @@
-export type GetPlaceSearchType = { data: string; id: string }
-export type PlacePayloadType<T> = { id: string; data: T }
+export type GetPlaceSearchType = { data: string; id: number }
+export type PlacePayloadType<T> = { id: number; data: T }

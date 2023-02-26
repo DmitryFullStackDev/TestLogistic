@@ -27,7 +27,8 @@ export const Counter = () => {
   }
 
   return (
-    <>
+    <Box direction="column" gap="5px">
+      <Text>Passengers</Text>
       <Box
         border="1px solid"
         borderColor="ui300"
@@ -37,16 +38,20 @@ export const Counter = () => {
         padding="6px 12px"
         width="fit-content"
         align="center"
-        gap="5px"
+        gap="10px"
       >
-        <Button onClick={handlePlus}>+</Button>
+        <Button type="secondary" onClick={handleMinus}>
+          -
+        </Button>
 
-        <Text>{search}</Text>
+        <Text width="15px">{search}</Text>
 
-        <Button onClick={handleMinus}>-</Button>
+        <Button type="primary" onClick={handlePlus}>
+          +
+        </Button>
       </Box>
 
-      {isError && <div>add passengers</div>}
-    </>
+      {isError && <Text color="warning">add passengers</Text>}
+    </Box>
   )
 }

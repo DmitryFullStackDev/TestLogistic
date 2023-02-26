@@ -15,17 +15,19 @@ function* getDistance(action: ReturnType<typeof actions.getDistance>) {
 
     yield put(actions.setDate(result))
 
-    yield put(actions.setIsSuccess(true))
+    yield put(actions.setIsResult(true))
   } catch (e) {
     const idArr = e.data.data.data.map(item => item[1])
 
     yield all(
       idArr.map(item =>
-        put(actionsLocation.setErrorPlaceSearch({ id: item, data: true })),
+        put(
+          actionsLocation.setErrorPlaceSearch({ id: Number(item), data: true }),
+        ),
       ),
     )
 
-    yield put(actions.setIsSuccess(false))
+    yield put(actions.setIsResult(false))
   } finally {
     yield put(actions.setIsLoading(false))
   }

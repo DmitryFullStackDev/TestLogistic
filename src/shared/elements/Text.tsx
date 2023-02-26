@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
 
 type Props = {
+  children: any
   type?:
     | 'h50'
     | 'h40'
@@ -38,7 +39,7 @@ type Props = {
     | 'green'
 }
 
-export const Text = styled.div<Props>`
+const TextStyled = styled.div<Props>`
   white-space: ${({ whiteSpace }) => whiteSpace || 'nowrap'};
 
   width: ${({ width }) => width};
@@ -137,3 +138,30 @@ export const Text = styled.div<Props>`
     letter-spacing: -0.24px;
   }
 `
+
+export const Text: FC<Props> = ({
+  textAlign,
+  margin,
+  color,
+  children,
+  maxWidth,
+  width,
+  whiteSpace,
+  type = 'body2',
+  minWidth,
+  userSelect,
+}) => (
+  <TextStyled
+    minWidth={minWidth}
+    textAlign={textAlign}
+    whiteSpace={whiteSpace}
+    width={width}
+    color={color}
+    userSelect={userSelect}
+    className={type}
+    margin={margin}
+    maxWidth={maxWidth}
+  >
+    {children}
+  </TextStyled>
+)

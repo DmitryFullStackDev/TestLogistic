@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 import './style.css'
 import {
   Box,
-  Button,
+  formatDate,
   OutsiderClicker,
+  Text,
   useSearchParamsState,
 } from '../../../../shared'
 
@@ -18,23 +19,30 @@ export const DatePiker = () => {
     setSearch(String(value.getTime()))
   }
 
-  const formatDateFn = date => {
-    const today = new Date(Number(date))
-    const yyyy = today.getFullYear()
-    let mm: string | number = today.getMonth() + 1
-    let dd: string | number = today.getDate()
-    if (dd < 10) {
-      dd = '0' + dd
-    }
-    if (mm < 10) {
-      mm = '0' + mm
-    }
-    return dd + '/' + mm + '/' + yyyy
-  }
+  useEffect(() => {
+    setSearch(initDate)
+  }, [])
 
   return (
     <Box position="relative">
-      <Button onClick={() => setIsOpen(p => !p)}>{formatDateFn(search)}</Button>
+      <Box direction="column" gap="5px">
+        <Text>Date</Text>
+        <Box
+          border="1px solid"
+          borderColor="ui300"
+          background="ui50"
+          borderRadius="6px"
+          shadow="low"
+          padding="6px 12px"
+          width="fit-content"
+          align="center"
+          gap="10px"
+          cursor="pointer"
+          onClick={() => setIsOpen(p => !p)}
+        >
+          <Text>{formatDate(search)}</Text>
+        </Box>
+      </Box>
 
       {isOpen && (
         <OutsiderClicker func={() => setIsOpen(false)}>

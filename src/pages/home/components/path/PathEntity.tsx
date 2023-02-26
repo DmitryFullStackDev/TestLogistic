@@ -4,18 +4,20 @@ import {
   Button,
   CrossIcon,
   Location,
+  Text,
   useSearchParamsState,
 } from '../../../../shared'
 import {
   addEntity,
   deleteEntity,
   getPlaceSearch,
+  setErrorPlaceSearch,
   setPlaceSearch,
   useActions,
 } from '../../../../entries'
 
 type ItemType = {
-  id: string
+  id: number
   placeSearch: any[]
   isLoading: boolean
   isPredictionsLoaded: boolean
@@ -34,11 +36,14 @@ export const PathEntity: FC<Props> = ({ item, i, arr }) => {
     setPlaceSearch,
     addEntity,
     deleteEntity,
+    setErrorPlaceSearch,
   })
   const [search, setSearch, deleteParam] = useSearchParamsState(
     'input' + item.id,
     '',
   )
+
+  const title = i === 0 ? 'City of origin' : 'City of destination'
 
   const handleDeleteClick = () => {
     deleteParam()
@@ -50,19 +55,28 @@ export const PathEntity: FC<Props> = ({ item, i, arr }) => {
   }, [])
 
   return (
-    <Box>
-      <Location
-        setPlaceSearch={a.setPlaceSearch}
-        getPlaceSearch={a.getPlaceSearch}
-        place={{ ...item, display: search }}
-        setDisplay={setSearch}
-      />
-
-      {i !== 0 && arr.length !== 2 && (
-        <Button margin="2px 10px" onClick={handleDeleteClick}>
-          <CrossIcon />
-        </Button>
-      )}
+    <Box direction="column" gap="5px">
+      <Text>{title}</Text>
+      <Box gap="10px" align="start">
+        <Location
+          width="85%"
+          setErrorPlaceSearch={a.setErrorPlaceSearch}
+          setPlaceSearch={a.setPlaceSearch}
+          getPlaceSearch={a.getPlaceSearch}
+          place={{ ...item, display: search }}
+          setDisplay={setSearch}
+        />
+        {i !== 0 && arr.length !== 2 && (
+          <Button
+            margin="10px 0 0 0"
+            iconSize="15px"
+            type="icon"
+            onClick={handleDeleteClick}
+          >
+            <CrossIcon />
+          </Button>
+        )}
+      </Box>
     </Box>
   )
 }

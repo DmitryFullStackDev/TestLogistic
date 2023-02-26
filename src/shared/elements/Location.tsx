@@ -16,7 +16,7 @@ import {
 import { ActionCreatorWithOptionalPayload } from '@reduxjs/toolkit'
 
 type PlaceType = {
-  id: string
+  id: number
   placeSearch: any[]
   isLoading: boolean
   isPredictionsLoaded: boolean
@@ -27,6 +27,10 @@ type PlaceType = {
 type Props = {
   width?: string
   place: PlaceType
+  setErrorPlaceSearch: ActionCreatorWithOptionalPayload<
+    PlacePayloadType<boolean>,
+    string
+  >
   getPlaceSearch: ActionCreatorWithOptionalPayload<GetPlaceSearchType, string>
   setDisplay: (opt: string) => void
   setPlaceSearch: ActionCreatorWithOptionalPayload<
@@ -41,6 +45,7 @@ export const Location: FC<Props> = ({
   getPlaceSearch,
   setDisplay,
   setPlaceSearch,
+  setErrorPlaceSearch,
 }) => {
   const {
     isPredictionsLoaded,
@@ -69,6 +74,7 @@ export const Location: FC<Props> = ({
     setDisplay(select[0])
     setIsOpen(false)
     inputRef.current.blur()
+    setErrorPlaceSearch({ data: false, id })
   }
 
   const getPlaceSearchTimer = useTimeout(getPlaceSearch, 800)
@@ -94,6 +100,7 @@ export const Location: FC<Props> = ({
     setDisplay('')
     setIsOpen(false)
     setPlaceSearch({ data: [], id })
+    setErrorPlaceSearch({ data: false, id })
     inputRef.current.focus()
   }
 
@@ -133,10 +140,12 @@ export const Location: FC<Props> = ({
               />
 
               <Button
+                type="icon"
+                iconSize="20px"
                 onClick={handleCrossClick}
                 position="absolute"
                 right="3px"
-                top="3px"
+                top="Calc(50% - 10px)"
                 disabled={isLoading}
               >
                 {isLoading ? <SpinnerIcon /> : <CrossIcon />}

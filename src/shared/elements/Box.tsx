@@ -20,6 +20,8 @@ type Props = {
   textAlign?: string
   color?: string
   position?: string
+  gridTemplateColumns?: string
+  borderRight?: string
   top?: string
   left?: string
   right?: string
@@ -52,6 +54,8 @@ export const Box = styled.div<Props>`
 
   border: ${({ border }) => border};
   border-top: ${({ borderTop }) => borderTop};
+  border-right: ${({ borderRight }) => borderRight};
+
   border-bottom: ${({ borderBottom }) => borderBottom};
   border-radius: ${({ borderRadius }) => borderRadius};
   border-color: ${({ borderColor, theme }) =>
@@ -69,4 +73,6 @@ export const Box = styled.div<Props>`
   bottom: ${({ bottom }) => bottom};
 
   box-shadow: ${({ shadow, theme }) => theme.shadows[shadow] || shadow};
+
+  grid-template-columns: ${({ gridTemplateColumns }) => gridTemplateColumns};
 `

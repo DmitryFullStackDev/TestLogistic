@@ -26,7 +26,7 @@ export const OutsiderClicker: FC<Props> = ({ children, func }) => {
   }, [wrapperRef])
 
   return (
-    <Box position="absolute" top="35px" ref={wrapperRef}>
+    <Box position="absolute" top="70px" ref={wrapperRef}>
       {children}
     </Box>
   )

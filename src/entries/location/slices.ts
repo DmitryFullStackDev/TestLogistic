@@ -7,14 +7,14 @@ export const place = createSlice({
   name: 'place',
   initialState: [
     {
-      id: 'origin',
+      id: 1,
       placeSearch: [],
       isLoading: false,
       isPredictionsLoaded: false,
       errorPlaceSearch: false,
     },
     {
-      id: 'destination',
+      id: 2,
       placeSearch: [],
       isLoading: false,
       isPredictionsLoaded: false,
@@ -70,7 +70,7 @@ export const place = createSlice({
         return item
       })
     },
-    addEntity: (state, { payload }: PayloadAction<string>) => {
+    addEntity: (state, { payload }: PayloadAction<number>) => {
       const isEntity = state.find(item => item.id === payload)
 
       if (!isEntity) {
@@ -83,7 +83,7 @@ export const place = createSlice({
         })
       }
     },
-    deleteEntity: (state, { payload }: PayloadAction<string>) =>
+    deleteEntity: (state, { payload }: PayloadAction<number>) =>
       state.filter(item => item.id !== payload),
   },
 })

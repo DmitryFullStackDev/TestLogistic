@@ -8,4 +8,4 @@ export {
   setErrorPlaceSearch,
 } from './location/slices'
 export { setCountError } from './counter/slices'
-export { getDistance } from './distance/slices'
+export { getDistance, setIsResult } from './distance/slices'
