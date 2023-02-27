@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/TestLogistic/static/css/main.c85692d3.css",
+    "main.js": "/TestLogistic/static/js/main.367f0054.js",
+    "index.html": "/TestLogistic/index.html",
+    "main.c85692d3.css.map": "/TestLogistic/static/css/main.c85692d3.css.map",
+    "main.367f0054.js.map": "/TestLogistic/static/js/main.367f0054.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c85692d3.css",
+    "static/js/main.367f0054.js"
+  ]
+}
