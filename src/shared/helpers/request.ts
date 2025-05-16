@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const request = axios.create({
-  baseURL: 'https://lit-refuge-01038.herokuapp.com/',
+  baseURL: 'http://localhost:8080',
 })
 
 request.interceptors.request.use(
