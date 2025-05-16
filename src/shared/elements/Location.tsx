@@ -57,6 +57,7 @@ export const Location: FC<Props> = ({
   } = place
 
   const [isOpen, setIsOpen] = useState(false)
+  const [isDebounce, setIsDebounce] = useState(false)
 
   const inputRef = useRef(null)
 
@@ -77,7 +78,18 @@ export const Location: FC<Props> = ({
     setErrorPlaceSearch({ data: false, id })
   }
 
-  const getPlaceSearchTimer = useTimeout(getPlaceSearch, 800)
+  const handleDebounceComplete = () => setIsDebounce(false)
+
+  const getDebouncePlaceSearchTimer = useTimeout(
+    getPlaceSearch,
+    800,
+    handleDebounceComplete,
+  )
+
+  const getPlaceSearchTimer = e => {
+    setIsDebounce(true)
+    getDebouncePlaceSearchTimer(e)
+  }
 
   const handleInputChange = e => {
     getPlaceSearchTimer({ data: e.target.value, id })
@@ -148,7 +160,7 @@ export const Location: FC<Props> = ({
                 top="Calc(50% - 10px)"
                 disabled={isLoading}
               >
-                {isLoading ? <SpinnerIcon /> : <CrossIcon />}
+                {isLoading || isDebounce ? <SpinnerIcon /> : <CrossIcon />}
               </Button>
             </InputWrapper>
 

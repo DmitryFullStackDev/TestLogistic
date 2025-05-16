@@ -1,14 +1,22 @@
 import { useRef } from 'react'
 
-export const useTimeout = (func: (...args: any[]) => any, delay: number) => {
+export const useTimeout = (
+  func: (...args: any[]) => any,
+  delay: number,
+  onComplete?: () => void,
+) => {
   const time = useRef(null)
 
-  return (...args) => {
+  return (...args: any[]) => {
     if (time.current) {
       clearTimeout(time.current)
     }
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    time.current = setTimeout(() => func(...args), delay)
+
+    time.current = setTimeout(() => {
+      func(...args)
+      if (onComplete) {
+        onComplete()
+      }
+    }, delay)
   }
 }
